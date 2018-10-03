@@ -2,51 +2,76 @@
 using Simcorp.IMS.Phone.Speaker;
 
 namespace IPlayTest {
+
     [TestClass]
     public class IPlayTest {
-        private void IPlayBaseTest(IPlay device, string expectedResult, FakeOutput output) {
+        FakeOutput output;
+        IPlay device;
+        string expectedMessage;
+
+        [TestMethod]
+        public void MonauralSpeakerTest() {
+            output = new FakeOutput();
+            device = new MonauralSpeakerSystem(new RealSpeaker(2), 20, output);
+            expectedMessage = $"{nameof(MonauralSpeakerSystem)} sound";
+
             //-- Act
             device.Play(new Track());
 
             //-- Assert
-            Assert.AreEqual(output.Result, expectedResult);
+            Assert.AreEqual(output.Result, expectedMessage);
         }
 
         [TestMethod]
-        public void IPlayUnitTest() {
-            FakeOutput output;
-            IPlay device;
-            string expectedMessage;
-
-            ///MonauralSpeaker Test
-            output = new FakeOutput();
-            device = new MonauralSpeakerSystem(new RealSpeaker(2), 20, output);
-            expectedMessage = $"{nameof(MonauralSpeakerSystem)} sound";
-            IPlayBaseTest(device, expectedMessage, output);
-
-            ///StereoSpeaker Test
+        public void StereoSpeakerTest() {
             output = new FakeOutput();
             device = new StereoSpeakerSystem(new RealSpeaker(2), new RealSpeaker(2), 20, output);
             expectedMessage = $"{nameof(StereoSpeakerSystem)} sound";
-            IPlayBaseTest(device, expectedMessage, output);
 
-            ///UnofficialHeadset Test
+            //-- Act
+            device.Play(new Track());
+
+            //-- Assert
+            Assert.AreEqual(output.Result, expectedMessage);
+        }
+
+        [TestMethod]
+        public void UnofficialHeadsetTest() {
             output = new FakeOutput();
             device = new UnofficialHeadset(new RealSpeaker(2), new RealSpeaker(2), 20, output);
             expectedMessage = $"{nameof(UnofficialHeadset)} sound";
-            IPlayBaseTest(device, expectedMessage, output);
 
-            ///SamsungHeadset Test
+            //-- Act
+            device.Play(new Track());
+
+            //-- Assert
+            Assert.AreEqual(output.Result, expectedMessage);
+        }
+
+        [TestMethod]
+        public void SamsungHeadsetTest() {
             output = new FakeOutput();
             device = new SamsungHeadset(new RealSpeaker(2), new RealSpeaker(2), 20, output);
             expectedMessage = $"{nameof(SamsungHeadset)} sound";
-            IPlayBaseTest(device, expectedMessage, output);
 
-            ///ExternalSpeaker Test
+            //-- Act
+            device.Play(new Track());
+
+            //-- Assert
+            Assert.AreEqual(output.Result, expectedMessage);
+        }
+
+        [TestMethod]
+        public void ExternalSpeakerTest() {
             output = new FakeOutput();
             device = new ExternalSpeaker(new RealSpeaker(2), 20, output);
             expectedMessage = $"{nameof(ExternalSpeaker)} sound";
-            IPlayBaseTest(device, expectedMessage, output);
+
+            //-- Act
+            device.Play(new Track());
+
+            //-- Assert
+            Assert.AreEqual(output.Result, expectedMessage);
         }
 
     }
