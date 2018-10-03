@@ -54,7 +54,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringFormatter.cs" />
     <EmbeddedResource Include="SMSPhone.resx">
       <DependentUpon>SMSPhone.cs</DependentUpon>
     </EmbeddedResource>
@@ -96,6 +95,10 @@
     <ProjectReference Include="..\Simcorp.IMS.Phone\Simcorp.IMS.Phone.csproj">
       <Project>{22f79a80-fc00-4892-85fb-a5598d1b58b4}</Project>
       <Name>Simcorp.IMS.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SortingTest\SortingTest.csproj">
+      <Project>{2dcbf806-8d2c-469e-91cf-dc27c4c05af7}</Project>
+      <Name>SortingTest</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -26,10 +26,10 @@
             this.CallListView = new System.Windows.Forms.ListView();
             this.ContactName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PhoneNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.CallType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SMSButton = new System.Windows.Forms.Button();
             this.ChargeProgressBar = new System.Windows.Forms.ProgressBar();
             this.ChargeButton = new System.Windows.Forms.Button();
-            this.CallType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // CallListView
@@ -44,7 +44,8 @@
             this.CallListView.Name = "CallListView";
             this.CallListView.Size = new System.Drawing.Size(285, 335);
             this.CallListView.TabIndex = 7;
-            this.CallListView.TileSize = new System.Drawing.Size(280, 50);
+            this.CallListView.TabStop = false;
+            this.CallListView.TileSize = new System.Drawing.Size(280, 45);
             this.CallListView.UseCompatibleStateImageBehavior = false;
             this.CallListView.View = System.Windows.Forms.View.Tile;
             // 

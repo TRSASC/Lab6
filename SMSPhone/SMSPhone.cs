@@ -1,27 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Simcorp.IMS.Phone;
 using Simcorp.IMS.Phone.Output;
 using Simcorp.IMS.Phone.Calls;
-using System.Linq;
 
 namespace SMSPhone {
 
-    public delegate string FormatDelegate(PhoneCall call);
     public delegate void AddCall(PhoneCall call);
     public delegate void UpdateProgBar();
 
     public partial class SMSPhone : Form {
         private SimCorpMobile simCorp;
-        private FormatDelegate Formatter;
         private AddCall CallAdder;
         private UpdateProgBar UpdProgBar;
-        private string Sender;
         private MsgStorage MsgData=new MsgStorage();
-        private string allSenderItem = "All";
         private bool CallButtonClicked;
         private bool bCharge = false;
         private bool bDischarge = true;
@@ -29,8 +23,6 @@ namespace SMSPhone {
         Task BatteryChargeTask;
         Task BatteryDischargeTask;
         
-
-
         public SMSPhone() {
             CallButtonClicked = false;
 
@@ -86,28 +78,30 @@ namespace SMSPhone {
         }
 
         private void DisplayCalls(List<PhoneCall> callList) {
-            foreach (var call in callList) {
-                ShowCall(call);
+            PhoneCall lastCall = null;
+            int numOfCalls = 1;
+            foreach (PhoneCall call in callList) {
+                if (!call.Equals(lastCall)) {
+                    if (lastCall != null) { ShowCall(lastCall, numOfCalls); }
+                    numOfCalls = 1;
+                    lastCall = call;
+                } else {
+                    numOfCalls++;
+                }
             }
+            ShowCall(lastCall, numOfCalls);
         }
 
-        private void ShowCall(PhoneCall call) {
-            string name = call.GetContactName();
+        private void ShowCall(PhoneCall call, int numOfCalls) {
+            string name;
+            if (numOfCalls==1) {
+                name = call.GetContactName();
+            } else {
+                name = call.GetContactName() + " (" + numOfCalls.ToString() + ")";
+            }
             string number = call.CallNumber;
             string type = call.GetCallType();
-            CallListView.Items.Add(new ListViewItem(new[] { name, number, type }));
-        }
-
-        private class FormatItem {
-            public string Name;
-            public FormatDelegate FormatDel;
-            public FormatItem(string name, FormatDelegate formatDel) {
-                Name = name;
-                FormatDel = formatDel;
-            }
-            public override string ToString() {
-                return Name;
-            }
+            CallListView.Items.Add(new ListViewItem(new[] { name, number, type,}));
         }
 
         private void SMSButton_Click(object sender, EventArgs e) {
